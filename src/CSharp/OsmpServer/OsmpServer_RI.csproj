@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94CF5D06-D68C-4ED7-B1F3-00F58343B695}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Osmp</RootNamespace>
+    <AssemblyName>OsmpServer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractCommand.cs" />
+    <Compile Include="AbstractEvent.cs" />
+    <Compile Include="CommandInfo.cs" />
+    <Compile Include="CommandParam.cs" />
+    <Compile Include="CommandResult.cs" />
+    <Compile Include="EventAbo.cs" />
+    <Compile Include="EventInfo.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\JsonExtensions.cs" />
+    <Compile Include="LogLevel.cs" />
+    <Compile Include="OsmpAttributes.cs" />
+    <Compile Include="OsmpServer.cs" />
+    <Compile Include="OsmpSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardCmds\ActiveCmdsCommand.cs" />
+    <Compile Include="StandardCmds\AproposCommand.cs" />
+    <Compile Include="StandardCmds\CpuUsageCommand.cs" />
+    <Compile Include="StandardCmds\DownloadCommand.cs" />
+    <Compile Include="StandardCmds\DownloadPartCommand.cs" />
+    <Compile Include="StandardCmds\EchoCommand.cs" />
+    <Compile Include="StandardCmds\Events\EventListCommand.cs" />
+    <Compile Include="StandardCmds\Events\EventSubscribeCommand.cs" />
+    <Compile Include="StandardCmds\Events\EventUnsubscribeCommand.cs" />
+    <Compile Include="StandardCmds\FindFilesCommand.cs" />
+    <Compile Include="StandardCmds\HelpCommand.cs" />
+    <Compile Include="StandardCmds\LoginCommand.cs" />
+    <Compile Include="StandardCmds\LogoutCommand.cs" />
+    <Compile Include="StandardCmds\MemoryCommand.cs" />
+    <Compile Include="StandardCmds\TimeCommand.cs" />
+    <Compile Include="StandardCmds\UploadCommand.cs" />
+    <Compile Include="StandardCmds\UploadPartCommand.cs" />
+    <Compile Include="StandardCmds\WaitCommand.cs" />
+    <Compile Include="Tests\OsmpClientTests.cs" />
+    <Compile Include="Tests\OsmpServerTests.cs" />
+    <Compile Include="TransferStats.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="inton.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OsmpClient\OsmpClient_RI.csproj">
+      <Project>{49a645a2-8f04-4f34-a371-9683540ba48e}</Project>
+      <Name>OsmpClient_RI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

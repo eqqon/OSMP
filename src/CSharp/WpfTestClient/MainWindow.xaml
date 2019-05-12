@@ -1,0 +1,43 @@
+﻿<Window x:Class="OsmpWpfTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:osmpWpfTest="clr-namespace:OsmpWpfTest"
+        Title="OSMP Test Client" Height="700" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Label>Address</Label>
+            <TextBox x:FieldModifier="public" Name="AddressTextBox" MinWidth="200" VerticalAlignment="Center">wss://localhost:4433/api/v1</TextBox>
+            <Button Click="OnConnect" Margin="5,0">Connect</Button>
+            <TextBlock Name="StatusTextBlock" VerticalAlignment="Center">Not connected</TextBlock>
+        </StackPanel>
+        <WrapPanel Grid.Row="1">
+            <Label Margin="5,0">Event Cmds</Label>
+            <Button Margin="5,0" Click="OnEventList">event-list</Button>
+            <Button Margin="5,0" Click="OnEventSub">event-subscribe</Button>
+            <Button Margin="5,0" Click="OnEventUnsub">event-unsubscribe</Button>
+            <Label Margin="5,0">Call Cmds</Label>
+            <Button Margin="5,0" Click="OnCallCreate">vcall-create</Button>
+            <Button Margin="5,0" Click="OnCallPlay">vcall-play</Button>
+            <Button Margin="5,0" Click="OnCallStop">vcall-stop</Button>
+            <Button Margin="5,0" Click="OnCallList">vcall-list</Button>
+            <Button Margin="5,0" Click="OnCallStatus">vcall-status</Button>
+            <Button Margin="5,0" Click="OnCallDelete">vcall-delete</Button>
+            <Label Margin="5,0">Device Status Cmds</Label>
+            <Button Margin="5,0" Click="OnDeviceStatus">vdevice-status</Button>
+            <Button Margin="5,0" Click="OnDeviceStatusFilter">vdevice-status-filter</Button>
+        </WrapPanel>
+        <osmpWpfTest:GenericTest x:Name="GenericTest" Grid.Row="2"/>
+        <DockPanel Grid.Row="3">
+            <Label DockPanel.Dock="Top">Protocol history:</Label>
+            <TextBox Name="ProtocolListingTextBox" Background="LightGoldenrodYellow" VerticalScrollBarVisibility="Visible">
+
+            </TextBox>
+        </DockPanel>
+    </Grid>
+</Window>

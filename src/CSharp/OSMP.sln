@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmpClient_RI", "OsmpClient\OsmpClient_RI.csproj", "{49A645A2-8F04-4F34-A371-9683540BA48E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsmpServer_RI", "OsmpServer\OsmpServer_RI.csproj", "{94CF5D06-D68C-4ED7-B1F3-00F58343B695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTestClient_RI", "WpfTestClient\WpfTestClient_RI.csproj", "{924F2CC0-7B8C-4AD6-9759-028563BD371F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49A645A2-8F04-4F34-A371-9683540BA48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A645A2-8F04-4F34-A371-9683540BA48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A645A2-8F04-4F34-A371-9683540BA48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A645A2-8F04-4F34-A371-9683540BA48E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94CF5D06-D68C-4ED7-B1F3-00F58343B695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94CF5D06-D68C-4ED7-B1F3-00F58343B695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94CF5D06-D68C-4ED7-B1F3-00F58343B695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94CF5D06-D68C-4ED7-B1F3-00F58343B695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{924F2CC0-7B8C-4AD6-9759-028563BD371F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{924F2CC0-7B8C-4AD6-9759-028563BD371F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{924F2CC0-7B8C-4AD6-9759-028563BD371F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{924F2CC0-7B8C-4AD6-9759-028563BD371F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
