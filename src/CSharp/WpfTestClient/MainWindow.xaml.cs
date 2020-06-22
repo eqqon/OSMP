@@ -13,6 +13,7 @@
  */
 
 using System;
+using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,9 +38,13 @@ namespace OsmpWpfTest
             _client.Dispose();
         }
 
+        const string ConnectionFile = "connection.txt";
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= OnLoaded;
+            if (File.Exists(ConnectionFile))
+                AddressTextBox.Text = File.ReadAllText(ConnectionFile);
             _client.MessageSent += OnMessageSent;
             _client.MessageReceived += OnMessageReceived;
             _client.CmdStreamReceived += OnStreamReceived;
@@ -103,11 +108,11 @@ namespace OsmpWpfTest
                 ProtocolListingTextBox.ScrollToEnd();
             }));
 
-        }
-        
+        }        
 
         private async void OnConnect(object sender, RoutedEventArgs e)
         {
+            File.WriteAllText(ConnectionFile, AddressTextBox.Text);
             if (_client.IsConnected)
                 _client.Disconnect();
             _client.Address = AddressTextBox.Text;

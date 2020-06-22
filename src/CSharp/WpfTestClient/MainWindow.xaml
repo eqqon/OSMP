@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <Label>Address</Label>
-            <TextBox x:FieldModifier="public" Name="AddressTextBox" MinWidth="200" VerticalAlignment="Center">wss://localhost:4433/api/v1</TextBox>
+            <TextBox x:FieldModifier="public" Name="AddressTextBox" MinWidth="200" VerticalAlignment="Center">ws://localhost:4433/osmp/v1</TextBox>
             <Button Click="OnConnect" Margin="5,0">Connect</Button>
             <TextBlock Name="StatusTextBlock" VerticalAlignment="Center">Not connected</TextBlock>
         </StackPanel>
