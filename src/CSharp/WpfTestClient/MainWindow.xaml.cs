@@ -17,7 +17,7 @@ using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Osmp;
+using eqqon.Osmp;
 
 namespace OsmpWpfTest
 {

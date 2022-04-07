@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <PackageProjectUrl></PackageProjectUrl>
+
+    <Copyright></Copyright>
+
+    <Description>Open System Management Protocol is an open communication protocol designed for easy exchange of information or data and control commands between networked systems. The protocol uses the open standard JSON for data exchange over a secure WebSocket transport. It is designed to be simple, secure, ubiquitous and extensible to make it suitable for use in any domain. OSMP provides a framework for extension with minimal effort.</Description>
+
+    <PackageIcon>README.md</PackageIcon>
+
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <RepositoryUrl></RepositoryUrl>
+
+    <RepositoryType></RepositoryType>
+
+    <PackageTags></PackageTags>
+
+    <PackageLicenseFile>..\..\..\LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eqqon.Osmp\eqqon.OSMP.csproj" />
+    <ProjectReference Include="..\OsmpServer_Standard\eqqon.OSMP.csproj" />
+  </ItemGroup>
+
+</Project>

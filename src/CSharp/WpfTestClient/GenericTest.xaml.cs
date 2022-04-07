@@ -16,7 +16,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
-using Osmp;
+using eqqon.Osmp;
 
 namespace OsmpWpfTest
 {

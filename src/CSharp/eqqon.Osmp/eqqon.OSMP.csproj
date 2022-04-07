@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<Version>1.0.1</Version>
+    <AssemblyName>eqqon.Osmp</AssemblyName>
+    <RootNamespace>eqqon.Osmp</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>
+	    Open System Management Protocol is an open communication protocol designed for easy exchange of information or data and control commands between networked systems. 
+	    The protocol uses the open standard JSON for data exchange over a secure WebSocket transport. It is designed to be simple, secure, ubiquitous and extensible to make it suitable 
+	    for use in any domain. OSMP provides a framework for extension with minimal effort.
+    </Description>
+    <Copyright>Copyright © 2017 by Eqqon GmbH</Copyright>
+    <PackageProjectUrl>https://github.com/eqqon/OSMP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eqqon/OSMP</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>osmp;open;system;management;protocol;websocket</PackageTags>
+    <Company>eqqon GmbH</Company>
+    <Product>OSMP</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE" Link="LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
