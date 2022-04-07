@@ -275,7 +275,7 @@ namespace eqqon.Osmp
         private void SendText(string text)
         {
             Interlocked.Add(ref TransferStats.TxBytes, Encoding.UTF8.GetBytes(text).Length);
-            SendAsync(text, (x) => { });
+            Send(text);
         }
 
         private void SendError(string message)

@@ -36,7 +36,7 @@ namespace eqqon.Osmp
             LastReceived = DateTime.MinValue;
             ConnectionTimeout = TimeSpan.FromSeconds(10);
             Address = "ws://localhost:443/osmp/v1";
-            CertValidationCallback = (o, cert, chain, sslPolicyErrors) => true; 
+            CertValidationCallback = (o, cert, chain, sslPolicyErrors) => true;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace eqqon.Osmp
 
         Dictionary<int, OsmpMessage> _waitingCommands = new Dictionary<int, OsmpMessage>();
 
-        
+
         private int _msg_counter = 0; // incremental message counter
 
         /// <summary>
@@ -122,15 +122,18 @@ namespace eqqon.Osmp
             _client.OnMessage += OnReceive;
             _client.OnError += OnError;
             _client.OnClose += OnClose;
+            Task task = null;
             lock (_waitingCommands)
             {
                 if (_connectCompletionSource == null)
                 {
                     _connectCompletionSource = new TaskCompletionSource<bool>();
-                    _client.ConnectAsync();
+                     task=Task.Run(() =>_client.Connect());
                     _connectTimeStamp = DateTime.Now;
                 }
             }
+            if (task != null)
+                await task;
             if (_timer == null)
             {
                 _timer = new Timer(OnTimerTick);
@@ -149,10 +152,10 @@ namespace eqqon.Osmp
             try
             {
                 var timeout = ConnectionTimeout;
-//#if DEBUG
-//                if (Debugger.IsAttached)
-//                    timeout = TimeSpan.FromSeconds(60);
-//#endif
+                //#if DEBUG
+                //                if (Debugger.IsAttached)
+                //                    timeout = TimeSpan.FromSeconds(60);
+                //#endif
                 // check commands already sent, waiting for answer
                 TaskCompletionSource<bool> task_source = null;
                 bool time_out = false;
@@ -254,13 +257,23 @@ namespace eqqon.Osmp
                 _waitingCommands[msg.Nr] = msg;
             if (msg.CancellationToken != CancellationToken.None)
                 msg.CancellationToken.Register(() => Cancel(msg));
-            _client.SendAsync(json, success =>
+            //_client.SendAsync(json, success =>
+            //{
+            //    if (!success)
+            //        task_source.TrySetResult(new OsmpResponse() { Result = "Send failed", Status = "FAIL", Command = msg });
+            //    if (MessageSent != null)
+            //        MessageSent(json, success);
+            //});
+            try
             {
-                if (!success)
-                    task_source.TrySetResult(new OsmpResponse() { Result = "Send failed", Status = "FAIL", Command = msg });
-                if (MessageSent != null)
-                    MessageSent(json, success);
-            });
+                _client.Send(json);
+                MessageSent?.Invoke(json, true);
+            }
+            catch (Exception e)
+            {
+                MessageSent?.Invoke(json, false);
+                task_source.TrySetResult(new OsmpResponse() { Result = "Send failed", Status = "FAIL", Command = msg });
+            }
             return await task_source.Task.ConfigureAwait(false);
         }
 
@@ -276,11 +289,20 @@ namespace eqqon.Osmp
             var cl = _client;
             if (cl == null)
                 return;
-            cl.SendAsync(text, success =>
+            //cl.SendAsync(text, success =>
+            //{
+            //    if (MessageSent != null)
+            //        MessageSent(text, success);
+            //});
+            try
             {
-                if (MessageSent != null)
-                    MessageSent(text, success);
-            });
+                _client.Send(text);
+                MessageSent?.Invoke(text, true);
+            }
+            catch (Exception e)
+            {
+                MessageSent?.Invoke(text, false);
+            }
         }
 
         /// <summary>
@@ -329,7 +351,7 @@ namespace eqqon.Osmp
         /// Note: this is used by unit tests to inject receive messages
         /// </summary>
         /// <param name="text"></param>
-        public void SimulateReceiveText(string text) {  ReceiveText(text); }
+        public void SimulateReceiveText(string text) { ReceiveText(text); }
 
         private void ReceiveText(string text)
         {
@@ -397,14 +419,14 @@ namespace eqqon.Osmp
             using (var rsa = new RSACryptoServiceProvider())
             {
                 rsa.FromXmlString(ServerPublicKey);
-                encrypted_pw = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(""+ _pw + token), false));
+                encrypted_pw = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes("" + _pw + token), false));
             }
             Respond(msg, data: new JObject { { "encrypted-password", encrypted_pw } });
         }
 
         private void HandleSignRequest(OsmpMessage msg)
         {
-            var token=msg.Data.Value<string>("token");
+            var token = msg.Data.Value<string>("token");
             if (string.IsNullOrWhiteSpace(token))
             {
                 Respond(msg, status: "ERROR", result: "Token is null or empty!");
@@ -414,7 +436,7 @@ namespace eqqon.Osmp
             Respond(msg, data: new JObject { { "signature", signature } });
         }
 
-        private void Respond(OsmpMessage server_cmd, JObject data=null, string status="OK", string result=null)
+        private void Respond(OsmpMessage server_cmd, JObject data = null, string status = "OK", string result = null)
         {
             var msg = new JObject { { "type", "response" }, { "id", server_cmd.Id }, { "nr", Interlocked.Increment(ref _msg_counter) }, { "cmd-nr", server_cmd.Nr }, { "status", status } };
             if (!string.IsNullOrWhiteSpace(result))
@@ -466,7 +488,7 @@ namespace eqqon.Osmp
                     var server_pkey = msg.Data.Value<string>("public-key");
                     if (ServerPublicKey == null)
                         ServerPublicKey = server_pkey;
-                    else if(ServerPublicKey!=server_pkey)
+                    else if (ServerPublicKey != server_pkey)
                     {
                         if (Error != null)
                             Error("Warning: server's actual public key differs from configured key!", null);
@@ -582,11 +604,11 @@ namespace eqqon.Osmp
             if (string.IsNullOrWhiteSpace(ServerPublicKey))
                 throw new InvalidOperationException("OsmpClient.ServerPublicKey must be configured!");
             _pw = plaintext_password;
-            var response=await Send(new OsmpMessage()
+            var response = await Send(new OsmpMessage()
             {
                 Id = "login",
                 Type = "cmd",
-                Data = new JObject {{"username", username}, {"method", "password"}}
+                Data = new JObject { { "username", username }, { "method", "password" } }
             });
             _pw = null;
             return response;
@@ -595,7 +617,7 @@ namespace eqqon.Osmp
         /// <summary>
         /// Login with username and public key
         /// </summary>
-        public async Task<OsmpResponse> LoginWithPublicKey(string username )
+        public async Task<OsmpResponse> LoginWithPublicKey(string username)
         {
             var response = await Send(new OsmpMessage()
             {
@@ -653,13 +675,13 @@ namespace eqqon.Osmp
         /// Message type ( cmd | response | stream | event |  cancel )
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; } 
+        public string Type { get; set; }
 
         /// <summary>
         /// Incremental message number. Set by client on send automatically
         /// </summary>
         [JsonProperty("nr")]
-        public int Nr { get; set; } 
+        public int Nr { get; set; }
 
         /// <summary>
         /// Command/Event name
